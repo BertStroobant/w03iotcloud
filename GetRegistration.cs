@@ -18,7 +18,7 @@ namespace MCT.Function
     {
         [FunctionName("GetRegistration")]
         public static async Task<IActionResult> Run(
-            [HttpTrigger(AuthorizationLevel.Anonymous, "get",  Route = "v1/registration")] HttpRequest req,
+            [HttpTrigger(AuthorizationLevel.Anonymous, "get",  Route = "v1/registrations")] HttpRequest req,
             ILogger log)
         {
             List<Registration> registration = new List<Registration>();

@@ -17,7 +17,7 @@ namespace MCT.Function
     {
         [FunctionName("AddRegistration")]
         public static async Task<IActionResult> addRegistration(
-            [HttpTrigger(AuthorizationLevel.Anonymous, "post", Route = "v1/registration")] HttpRequest req,
+            [HttpTrigger(AuthorizationLevel.Anonymous, "post", Route = "v1/registrations")] HttpRequest req,
             ILogger log)
         {
             string requestBody = await new StreamReader(req.Body).ReadToEndAsync();
