@@ -25,15 +25,15 @@ namespace MCT.Function
             {
                 string requestBody = await new StreamReader(req.Body).ReadToEndAsync();
                 Registration reg = JsonConvert.DeserializeObject<Registration>(requestBody);
-                string accountName = Environment.GetEnvironmentVariable("AccountName");
-                string storageAccountKey = Environment.GetEnvironmentVariable("StorageAccountKey");
+                //string accountName = Environment.GetEnvironmentVariable("AccountName");
+                //string storageAccountKey = Environment.GetEnvironmentVariable("StorageAccountKey");
                 string storageUri = Environment.GetEnvironmentVariable("StorageUri");
                 string partitionKey = "registrations";
                 string rowKey = Guid.NewGuid().ToString();
                 var tableClient = new TableClient
                 (new Uri(storageUri),
                     "registrations",
-                    new TableSharedKeyCredential(accountName, storageAccountKey));
+                    new DefaultAzureCredentials() );
                 await tableClient.CreateIfNotExistsAsync();
                 var entity = new TableEntity(partitionKey, rowKey)
                 {
