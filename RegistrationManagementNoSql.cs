@@ -11,6 +11,7 @@ using w03iotcloud.models;
 using System.Collections.Generic;
 using System.Data.SqlClient;
 using Azure.Data.Tables;
+using Azure.Identity;
 
 namespace MCT.Function
 {
@@ -25,15 +26,13 @@ namespace MCT.Function
             {
                 string requestBody = await new StreamReader(req.Body).ReadToEndAsync();
                 Registration reg = JsonConvert.DeserializeObject<Registration>(requestBody);
-                //string accountName = Environment.GetEnvironmentVariable("AccountName");
-                //string storageAccountKey = Environment.GetEnvironmentVariable("StorageAccountKey");
                 string storageUri = Environment.GetEnvironmentVariable("StorageUri");
                 string partitionKey = "registrations";
                 string rowKey = Guid.NewGuid().ToString();
                 var tableClient = new TableClient
                 (new Uri(storageUri),
                     "registrations",
-                    new DefaultAzureCredentials() );
+                    new DefaultAzureCredential() );
                 await tableClient.CreateIfNotExistsAsync();
                 var entity = new TableEntity(partitionKey, rowKey)
                 {
